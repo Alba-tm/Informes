@@ -1,0 +1,107 @@
+[
+  {
+    "id": 1,
+    "puesto": "Desarrollador Android Junior",
+    "empresa": "TecnoLevante",
+    "ciudad": "Valencia",
+    "salario": 21000
+  },
+  {
+    "id": 2,
+    "puesto": "Programador Kotlin Junior",
+    "empresa": "AppSoluciones",
+    "ciudad": "Valencia",
+    "salario": 22000
+  },
+  {
+    "id": 3,
+    "puesto": "Analista de Datos",
+    "empresa": "DataVLC",
+    "ciudad": "Valencia",
+    "salario": 28000
+  },
+  {
+    "id": 4,
+    "puesto": "Desarrollador Backend",
+    "empresa": "WebCorp",
+    "ciudad": "Valencia",
+    "salario": 32000
+  },
+  {
+    "id": 5,
+    "puesto": "Diseñador UX/UI",
+    "empresa": "DesignStudio",
+    "ciudad": "Valencia",
+    "salario": 25000
+  },
+  {
+    "id": 6,
+    "puesto": "Desarrollador Android Senior",
+    "empresa": "MadTech",
+    "ciudad": "Madrid",
+    "salario": 45000
+  },
+  {
+    "id": 7,
+    "puesto": "Ingeniero de Software",
+    "empresa": "GlobalSys",
+    "ciudad": "Madrid",
+    "salario": 40000
+  },
+  {
+    "id": 8,
+    "puesto": "Arquitecto Cloud",
+    "empresa": "CloudNet",
+    "ciudad": "Madrid",
+    "salario": 55000
+  },
+  {
+    "id": 9,
+    "puesto": "Desarrollador Frontend",
+    "empresa": "FrontMad",
+    "ciudad": "Madrid",
+    "salario": 30000
+  },
+  {
+    "id": 10,
+    "puesto": "Scrum Master",
+    "empresa": "AgileCorp",
+    "ciudad": "Madrid",
+    "salario": 38000
+  },
+  {
+    "id": 11,
+    "puesto": "Desarrollador iOS",
+    "empresa": "AppleSolutions",
+    "ciudad": "Alicante",
+    "salario": 28000
+  },
+  {
+    "id": 12,
+    "puesto": "Administrador de Sistemas",
+    "empresa": "SysAli",
+    "ciudad": "Alicante",
+    "salario": 26000
+  },
+  {
+    "id": 13,
+    "puesto": "Consultor SAP",
+    "empresa": "ConsultingAli",
+    "ciudad": "Alicante",
+    "salario": 35000
+  },
+  {
+    "id": 14,
+    "puesto": "Especialista en Ciberseguridad",
+    "empresa": "SecureNet",
+    "ciudad": "Alicante",
+    "salario": 42000
+  },
+  {
+    "id": 15,
+    "puesto": "Soporte Técnico IT",
+    "empresa": "TechSupport",
+    "ciudad": "Alicante",
+    "salario": 19000
+  }
+]
