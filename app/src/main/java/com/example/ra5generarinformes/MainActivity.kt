@@ -1,14 +1,21 @@
 package com.example.ra5generarinformes
 
+import android.graphics.Paint
+import android.graphics.Typeface
+import android.graphics.pdf.PdfDocument
 import android.os.Bundle
+import android.os.Environment
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.Spinner
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import org.json.JSONArray
+import java.io.File
+import java.io.FileOutputStream
 
 class MainActivity : AppCompatActivity() {
 
@@ -59,6 +66,9 @@ class MainActivity : AppCompatActivity() {
             val ciudadSeleccionada = spinnerCiudad.selectedItem.toString()
             val ofertasFiltradas = filtrarOfertasPorCiudad(ciudadSeleccionada)
             mostrarResultado(ciudadSeleccionada, ofertasFiltradas)
+        }
+        botonExportarPdf.setOnClickListener {
+            generarPdf()
         }
     }
 
@@ -131,5 +141,45 @@ class MainActivity : AppCompatActivity() {
         textoCantidadValencia.text = ofertasValencia.toString()
         textoCantidadMadrid.text = ofertasMadrid.toString()
         textoCantidadAlicante.text = ofertasAlicante.toString()
+    }
+    private fun generarPdf() {
+        try {
+            val documentoPdf = PdfDocument()
+            val infoPagina = PdfDocument.PageInfo.Builder(595, 842, 1).create()
+            val pagina = documentoPdf.startPage(infoPagina)
+            val canvas = pagina.canvas
+            val paint = Paint()
+
+            // Fase 12
+            paint.typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
+            paint.textSize = 20f
+            val ciudadSeleccionada = spinnerCiudad.selectedItem.toString()
+            canvas.drawText("Informe de Ofertas: $ciudadSeleccionada", 50f, 50f, paint)
+
+            // Fase 13
+            paint.typeface = Typeface.create(Typeface.DEFAULT, Typeface.NORMAL)
+            paint.textSize = 14f
+            var posicionY = 100f
+            val ofertasParaPdf = filtrarOfertasPorCiudad(ciudadSeleccionada)
+            ofertasParaPdf.forEachIndexed { indice, oferta ->
+                val texto = "${indice + 1}. ${oferta.puesto} - ${oferta.empresa} - ${formatearSalario(oferta.salario)}"
+                canvas.drawText(texto, 50f, posicionY, paint)
+                posicionY += 30f
+            }
+            documentoPdf.finishPage(pagina)
+
+            // Fase 14
+            val carpetaDescargas = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+            val archivoPdf = File(carpetaDescargas, "Informe_Ofertas_$ciudadSeleccionada.pdf")
+            val salida = FileOutputStream(archivoPdf)
+            documentoPdf.writeTo(salida)
+            documentoPdf.close()
+            salida.close()
+
+            Toast.makeText(this, "PDF guardado en Descargas", Toast.LENGTH_LONG).show()
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Toast.makeText(this, "Error al guardar el PDF", Toast.LENGTH_SHORT).show()
+        }
     }
 }
