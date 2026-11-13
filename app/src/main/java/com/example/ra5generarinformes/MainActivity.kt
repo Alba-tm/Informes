@@ -55,6 +55,11 @@ class MainActivity : AppCompatActivity() {
         configurarSpinner()
 
         ofertas.addAll(cargarOfertas())
+        botonGenerarInforme.setOnClickListener {
+            val ciudadSeleccionada = spinnerCiudad.selectedItem.toString()
+            val ofertasFiltradas = filtrarOfertasPorCiudad(ciudadSeleccionada)
+            mostrarResultado(ciudadSeleccionada, ofertasFiltradas)
+        }
     }
 
     private fun configurarSpinner() {
@@ -85,5 +90,46 @@ class MainActivity : AppCompatActivity() {
 
     private fun filtrarOfertasPorCiudad(ciudad: String): List<Oferta> {
         return if (ciudad == "Todas") ofertas else ofertas.filter { it.ciudad == ciudad }
+    }
+    private fun mostrarResultado(ciudad: String, ofertasFiltradas: List<Oferta>) {
+        val numeroOfertas = ofertasFiltradas.size
+        val salarioTotal = ofertasFiltradas.sumOf { it.salario }
+        val salarioMedio = if (ofertasFiltradas.isNotEmpty()) ofertasFiltradas.map { it.salario }.average() else 0.0
+        val salarioMaximo = ofertasFiltradas.maxOfOrNull { it.salario } ?: 0
+
+        textoCiudadSeleccionada.text = "Ciudad seleccionada: $ciudad"
+        textoNumeroOfertas.text = "Numero de ofertas: $numeroOfertas"
+        textoSalarioTotal.text = "Salario total: ${formatearSalario(salarioTotal)}"
+        textoSalarioMedio.text = "Salario medio: ${formatearSalario(salarioMedio.toInt())}"
+        textoSalarioMaximo.text = "Salario maximo: ${formatearSalario(salarioMaximo)}"
+
+        mostrarGrafico(ofertasFiltradas)
+
+        contenedorOfertas.removeAllViews()
+        ofertasFiltradas.forEachIndexed { indice, oferta ->
+            val textoOferta = TextView(this)
+            textoOferta.text = "${indice + 1}. ${oferta.puesto}\n${oferta.empresa} - ${oferta.ciudad} - ${formatearSalario(oferta.salario)}"
+            textoOferta.textSize = 16f
+            textoOferta.setPadding(0, 0, 0, 24)
+            contenedorOfertas.addView(textoOferta)
+        }
+    }
+
+    private fun formatearSalario(salario: Int): String {
+        return "%,d".format(salario).replace(",", ".") + " €"
+    }
+
+    private fun mostrarGrafico(ofertasFiltradas: List<Oferta>) {
+        val ofertasValencia = ofertasFiltradas.count { it.ciudad == "Valencia" }
+        val ofertasMadrid = ofertasFiltradas.count { it.ciudad == "Madrid" }
+        val ofertasAlicante = ofertasFiltradas.count { it.ciudad == "Alicante" }
+        val valorMaximo = maxOf(ofertasValencia, ofertasMadrid, ofertasAlicante, 1)
+
+        barraValencia.max = valorMaximo; barraMadrid.max = valorMaximo; barraAlicante.max = valorMaximo
+        barraValencia.progress = ofertasValencia; barraMadrid.progress = ofertasMadrid; barraAlicante.progress = ofertasAlicante
+
+        textoCantidadValencia.text = ofertasValencia.toString()
+        textoCantidadMadrid.text = ofertasMadrid.toString()
+        textoCantidadAlicante.text = ofertasAlicante.toString()
     }
 }
