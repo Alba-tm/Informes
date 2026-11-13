@@ -82,7 +82,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun configurarSpinner() {
-        val ciudades = arrayOf("Todas", "Valencia", "Madrid", "Alicante, Barcelona")
+        val ciudades = arrayOf("Todas", "Valencia", "Madrid", "Alicante", "Barcelona")
         val adaptador = ArrayAdapter(this, android.R.layout.simple_spinner_item, ciudades)
         adaptador.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerCiudad.adapter = adaptador
