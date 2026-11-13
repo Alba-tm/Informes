@@ -1,20 +1,61 @@
 package com.example.ra5generarinformes
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
+import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.LinearLayout
+import android.widget.ProgressBar
+import android.widget.Spinner
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var spinnerCiudad: Spinner
+    private lateinit var botonGenerarInforme: Button
+    private lateinit var botonExportarPdf: Button
+    private lateinit var contenedorInforme: LinearLayout
+    private lateinit var textoCiudadSeleccionada: TextView
+    private lateinit var textoNumeroOfertas: TextView
+    private lateinit var textoSalarioTotal: TextView
+    private lateinit var textoSalarioMedio: TextView
+    private lateinit var textoSalarioMaximo: TextView
+    private lateinit var barraValencia: ProgressBar
+    private lateinit var barraMadrid: ProgressBar
+    private lateinit var barraAlicante: ProgressBar
+    private lateinit var textoCantidadValencia: TextView
+    private lateinit var textoCantidadMadrid: TextView
+    private lateinit var textoCantidadAlicante: TextView
+    private lateinit var contenedorOfertas: LinearLayout
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_main)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+
+        spinnerCiudad = findViewById(R.id.spinnerCiudad)
+        botonGenerarInforme = findViewById(R.id.botonGenerarInforme)
+        botonExportarPdf = findViewById(R.id.botonExportarPdf)
+        contenedorInforme = findViewById(R.id.contenedorInforme)
+        textoCiudadSeleccionada = findViewById(R.id.textoCiudadSeleccionada)
+        textoNumeroOfertas = findViewById(R.id.textoNumeroOfertas)
+        textoSalarioTotal = findViewById(R.id.textoSalarioTotal)
+        textoSalarioMedio = findViewById(R.id.textoSalarioMedio)
+        textoSalarioMaximo = findViewById(R.id.textoSalarioMaximo)
+        barraValencia = findViewById(R.id.barraValencia)
+        barraMadrid = findViewById(R.id.barraMadrid)
+        barraAlicante = findViewById(R.id.barraAlicante)
+        textoCantidadValencia = findViewById(R.id.textoCantidadValencia)
+        textoCantidadMadrid = findViewById(R.id.textoCantidadMadrid)
+        textoCantidadAlicante = findViewById(R.id.textoCantidadAlicante)
+        contenedorOfertas = findViewById(R.id.contenedorOfertas)
+
+        configurarSpinner()
+    }
+
+    private fun configurarSpinner() {
+        val ciudades = arrayOf("Todas", "Valencia", "Madrid", "Alicante")
+        val adaptador = ArrayAdapter(this, android.R.layout.simple_spinner_item, ciudades)
+        adaptador.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerCiudad.adapter = adaptador
     }
 }
