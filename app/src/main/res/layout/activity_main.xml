@@ -12,7 +12,7 @@
         android:id="@+id/textoTitulo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Informe de ofertas"
+        android:text="@string/informe_de_ofertas"
         android:textSize="26sp"
         android:textStyle="bold" />
 
@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="Ciudad"
+        android:text="@string/ciudad"
         android:textSize="18sp" />
 
     <Spinner
@@ -35,14 +35,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="Generar informe" />
+        android:text="@string/generar_informe" />
 
     <Button
         android:id="@+id/botonExportarPdf"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:text="Exportar PDF" />
+        android:text="@string/exportar_pdf" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -60,7 +60,7 @@
                 android:id="@+id/textoCiudadSeleccionada"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Ciudad seleccionada: -"
+                android:text="@string/ciudad_seleccionada"
                 android:textSize="16sp" />
 
             <TextView
@@ -68,7 +68,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="Numero de ofertas: -"
+                android:text="@string/numero_de_ofertas"
                 android:textSize="16sp" />
 
             <TextView
@@ -76,7 +76,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="Salario total: -"
+                android:text="@string/salario_total"
                 android:textSize="16sp" />
 
             <TextView
@@ -84,7 +84,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="Salario medio: -"
+                android:text="@string/salario_medio"
                 android:textSize="16sp" />
 
             <TextView
@@ -92,7 +92,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="Salario maximo: -"
+                android:text="@string/salario_maximo"
                 android:textSize="16sp" />
 
             <TextView
@@ -104,11 +104,19 @@
                 android:textSize="16sp" />
 
             <TextView
+                android:id="@+id/textoConclusion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/la_oferta_mejor_pagada_del_filtro_es"
+                android:textSize="16sp" />
+
+            <TextView
                 android:id="@+id/textoTituloGrafico"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:text="Ofertas por ciudad"
+                android:text="@string/ofertas_por_ciudad"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -129,7 +137,7 @@
                     <TextView
                         android:layout_width="90dp"
                         android:layout_height="wrap_content"
-                        android:text="Valencia"
+                        android:text="@string/valencia"
                         android:textSize="16sp" />
 
                     <ProgressBar
@@ -147,7 +155,7 @@
                         android:layout_width="40dp"
                         android:layout_height="wrap_content"
                         android:gravity="end"
-                        android:text="0"
+                        android:text="@string/_cero"
                         android:textSize="16sp" />
                 </LinearLayout>
 
@@ -162,7 +170,7 @@
                     <TextView
                         android:layout_width="90dp"
                         android:layout_height="wrap_content"
-                        android:text="Madrid"
+                        android:text="@string/madrid"
                         android:textSize="16sp" />
 
                     <ProgressBar
@@ -180,7 +188,7 @@
                         android:layout_width="40dp"
                         android:layout_height="wrap_content"
                         android:gravity="end"
-                        android:text="0"
+                        android:text="@string/cero_"
                         android:textSize="16sp" />
                 </LinearLayout>
 
@@ -195,7 +203,7 @@
                     <TextView
                         android:layout_width="90dp"
                         android:layout_height="wrap_content"
-                        android:text="Alicante"
+                        android:text="@string/alicante"
                         android:textSize="16sp" />
 
                     <ProgressBar
@@ -213,7 +221,7 @@
                         android:layout_width="40dp"
                         android:layout_height="wrap_content"
                         android:gravity="end"
-                        android:text="0"
+                        android:text="@string/cero"
                         android:textSize="16sp" />
                 </LinearLayout>
                 <LinearLayout
@@ -255,7 +263,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:text="Ofertas"
+                android:text="@string/ofertas"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 

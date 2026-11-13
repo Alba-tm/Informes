@@ -6,6 +6,6 @@ data class Oferta(
     val empresa: String,
     val ciudad: String,
     val salario: Int,
-    val modalidad: String
+    val modalidad: String,
 )
 

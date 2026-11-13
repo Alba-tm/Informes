@@ -1,11 +1,7 @@
 package com.example.ra5generarinformes
 
 import android.annotation.SuppressLint
-import android.graphics.Paint
-import android.graphics.Typeface
-import android.graphics.pdf.PdfDocument
 import android.os.Bundle
-import android.os.Environment
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.LinearLayout
@@ -13,10 +9,9 @@ import android.widget.ProgressBar
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import org.json.JSONArray
-import java.io.File
-import java.io.FileOutputStream
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,20 +24,29 @@ class MainActivity : AppCompatActivity() {
     private lateinit var textoSalarioTotal: TextView
     private lateinit var textoSalarioMedio: TextView
     private lateinit var textoSalarioMaximo: TextView
+    private lateinit var textoSalarioMinimo: TextView
+    private lateinit var textoConclusion: TextView
     private lateinit var barraValencia: ProgressBar
     private lateinit var barraMadrid: ProgressBar
     private lateinit var barraAlicante: ProgressBar
+    private lateinit var barraBarcelona: ProgressBar
     private lateinit var textoCantidadValencia: TextView
     private lateinit var textoCantidadMadrid: TextView
     private lateinit var textoCantidadAlicante: TextView
-
-    private lateinit var barraBarcelona: ProgressBar
     private lateinit var textoCantidadBarcelona: TextView
     private lateinit var contenedorOfertas: LinearLayout
 
-    private lateinit var textoSalarioMinimo: TextView
-
     private val ofertas = ArrayList<Oferta>()
+
+    private val creadorPdf = registerForActivityResult(
+        ActivityResultContracts.CreateDocument("application/pdf"),
+    ) { uri ->
+        if (uri != null) {
+            guardarPdfEnUri(uri)
+        } else {
+            Toast.makeText(this, "Operación cancelada", Toast.LENGTH_SHORT).show()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,27 +61,30 @@ class MainActivity : AppCompatActivity() {
         textoSalarioTotal = findViewById(R.id.textoSalarioTotal)
         textoSalarioMedio = findViewById(R.id.textoSalarioMedio)
         textoSalarioMaximo = findViewById(R.id.textoSalarioMaximo)
+        textoSalarioMinimo = findViewById(R.id.textoSalarioMinimo)
+        textoConclusion = findViewById(R.id.textoConclusion)
         barraValencia = findViewById(R.id.barraValencia)
         barraMadrid = findViewById(R.id.barraMadrid)
         barraAlicante = findViewById(R.id.barraAlicante)
+        barraBarcelona = findViewById(R.id.barraBarcelona)
         textoCantidadValencia = findViewById(R.id.textoCantidadValencia)
         textoCantidadMadrid = findViewById(R.id.textoCantidadMadrid)
         textoCantidadAlicante = findViewById(R.id.textoCantidadAlicante)
-        contenedorOfertas = findViewById(R.id.contenedorOfertas)
-        barraBarcelona = findViewById(R.id.barraBarcelona)
         textoCantidadBarcelona = findViewById(R.id.textoCantidadBarcelona)
-        textoSalarioMinimo = findViewById(R.id.textoSalarioMinimo)
+        contenedorOfertas = findViewById(R.id.contenedorOfertas)
 
         configurarSpinner()
-
         ofertas.addAll(cargarOfertas())
+
         botonGenerarInforme.setOnClickListener {
             val ciudadSeleccionada = spinnerCiudad.selectedItem.toString()
             val ofertasFiltradas = filtrarOfertasPorCiudad(ciudadSeleccionada)
             mostrarResultado(ciudadSeleccionada, ofertasFiltradas)
         }
+
         botonExportarPdf.setOnClickListener {
-            generarPdf()
+            val ciudadSeleccionada = spinnerCiudad.selectedItem.toString()
+            creadorPdf.launch("Informe_Ofertas_$ciudadSeleccionada.pdf")
         }
     }
 
@@ -88,7 +95,6 @@ class MainActivity : AppCompatActivity() {
         spinnerCiudad.adapter = adaptador
     }
 
-
     private fun cargarOfertas(): ArrayList<Oferta> {
         val listaOfertas = ArrayList<Oferta>()
         val textoJson = assets.open("ofertas.json").bufferedReader().use { it.readText() }
@@ -96,26 +102,37 @@ class MainActivity : AppCompatActivity() {
 
         for (i in 0 until arrayJson.length()) {
             val objetoJson = arrayJson.getJSONObject(i)
-            listaOfertas.add(Oferta(
-                objetoJson.getInt("id"),
-                objetoJson.getString("puesto"),
-                objetoJson.getString("empresa"),
-                objetoJson.getString("ciudad"),
-                objetoJson.getInt("salario"),
-                objetoJson.getString("modalidad")
-            ))
+            listaOfertas.add(
+                Oferta(
+                    objetoJson.getInt("id"),
+                    objetoJson.getString("puesto"),
+                    objetoJson.getString("empresa"),
+                    objetoJson.getString("ciudad"),
+                    objetoJson.getInt("salario"),
+                    objetoJson.getString("modalidad"),
+                ),
+            )
         }
         return listaOfertas
     }
 
     private fun filtrarOfertasPorCiudad(ciudad: String): List<Oferta> {
-        return if (ciudad == "Todas") ofertas else ofertas.filter { it.ciudad == ciudad }
+        return if (ciudad == "Todas") {
+            ofertas
+        } else {
+            ofertas.filter { it.ciudad == ciudad }
+        }
     }
+
     @SuppressLint("SetTextI18n")
     private fun mostrarResultado(ciudad: String, ofertasFiltradas: List<Oferta>) {
         val numeroOfertas = ofertasFiltradas.size
         val salarioTotal = ofertasFiltradas.sumOf { it.salario }
-        val salarioMedio = if (ofertasFiltradas.isNotEmpty()) ofertasFiltradas.map { it.salario }.average() else 0.0
+        val salarioMedio = if (ofertasFiltradas.isNotEmpty()) {
+            ofertasFiltradas.asSequence().map { it.salario }.average()
+        } else {
+            0.0
+        }
         val salarioMaximo = ofertasFiltradas.maxOfOrNull { it.salario } ?: 0
         val salarioMinimo = ofertasFiltradas.minOfOrNull { it.salario } ?: 0
 
@@ -125,6 +142,13 @@ class MainActivity : AppCompatActivity() {
         textoSalarioMedio.text = "Salario medio: ${formatearSalario(salarioMedio.toInt())}"
         textoSalarioMaximo.text = "Salario maximo: ${formatearSalario(salarioMaximo)}"
         textoSalarioMinimo.text = "Salario minimo: ${formatearSalario(salarioMinimo)}"
+
+        val mejorOferta = ofertasFiltradas.maxByOrNull { it.salario }
+        if (mejorOferta != null) {
+            textoConclusion.text = "La oferta mejor pagada del filtro es: ${mejorOferta.puesto} (${formatearSalario(mejorOferta.salario)})"
+        } else {
+            textoConclusion.text = "La oferta mejor pagada del filtro es: -"
+        }
 
         mostrarGrafico(ofertasFiltradas)
 
@@ -166,41 +190,30 @@ class MainActivity : AppCompatActivity() {
         textoCantidadAlicante.text = ofertasAlicante.toString()
         textoCantidadBarcelona.text = ofertasBarcelona.toString()
     }
-    private fun generarPdf() {
+
+    private fun guardarPdfEnUri(uri: android.net.Uri) {
         try {
-            val documentoPdf = PdfDocument()
-            val infoPagina = PdfDocument.PageInfo.Builder(595, 842, 1).create()
+            val documentoPdf = android.graphics.pdf.PdfDocument()
+
+            val infoPagina = android.graphics.pdf.PdfDocument.PageInfo.Builder(
+                contenedorInforme.width,
+                contenedorInforme.height,
+                1,
+            ).create()
+
             val pagina = documentoPdf.startPage(infoPagina)
             val canvas = pagina.canvas
-            val paint = Paint()
 
-
-            paint.typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
-            paint.textSize = 20f
-            val ciudadSeleccionada = spinnerCiudad.selectedItem.toString()
-            canvas.drawText("Informe de Ofertas: $ciudadSeleccionada", 50f, 50f, paint)
-
-
-            paint.typeface = Typeface.create(Typeface.DEFAULT, Typeface.NORMAL)
-            paint.textSize = 14f
-            var posicionY = 100f
-            val ofertasParaPdf = filtrarOfertasPorCiudad(ciudadSeleccionada)
-            ofertasParaPdf.forEachIndexed { indice, oferta ->
-                val texto = "${indice + 1}. ${oferta.puesto} - ${oferta.empresa} - ${formatearSalario(oferta.salario)}"
-                canvas.drawText(texto, 50f, posicionY, paint)
-                posicionY += 30f
-            }
+            contenedorInforme.draw(canvas)
             documentoPdf.finishPage(pagina)
 
-
-            val carpetaDescargas = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-            val archivoPdf = File(carpetaDescargas, "Informe_Ofertas_$ciudadSeleccionada.pdf")
-            val salida = FileOutputStream(archivoPdf)
-            documentoPdf.writeTo(salida)
+            contentResolver.openOutputStream(uri)?.use { salida ->
+                documentoPdf.writeTo(salida)
+            }
             documentoPdf.close()
-            salida.close()
 
-            Toast.makeText(this, "PDF guardado en Descargas", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "PDF guardado correctamente", Toast.LENGTH_LONG).show()
+
         } catch (e: Exception) {
             e.printStackTrace()
             Toast.makeText(this, "Error al guardar el PDF", Toast.LENGTH_SHORT).show()

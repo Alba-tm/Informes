@@ -3,4 +3,22 @@
     <string name="barcelona">Barcelona</string>
     <string name="_0">0</string>
     <string name="salario_minimo">Salario minimo: -</string>
+    <string name="informe_de_ofertas">Informe de ofertas</string>
+    <string name="ciudad">Ciudad</string>
+    <string name="generar_informe">Generar informe</string>
+    <string name="exportar_pdf">Exportar PDF</string>
+    <string name="ciudad_seleccionada">Ciudad seleccionada: -</string>
+    <string name="numero_de_ofertas">Numero de ofertas: -</string>
+    <string name="salario_total">Salario total: -</string>
+    <string name="salario_medio">Salario medio: -</string>
+    <string name="salario_maximo">Salario maximo: -</string>
+    <string name="la_oferta_mejor_pagada_del_filtro_es">La oferta mejor pagada del filtro es: -</string>
+    <string name="ofertas_por_ciudad">Ofertas por ciudad</string>
+    <string name="valencia">Valencia</string>
+    <string name="madrid">Madrid</string>
+    <string name="alicante">Alicante</string>
+    <string name="ofertas">Ofertas</string>
+    <string name="cero">0</string>
+    <string name="cero_">0</string>
+    <string name="_cero">0</string>
 </resources>
