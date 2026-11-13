@@ -40,6 +40,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var textoCantidadBarcelona: TextView
     private lateinit var contenedorOfertas: LinearLayout
 
+    private lateinit var textoSalarioMinimo: TextView
+
     private val ofertas = ArrayList<Oferta>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,6 +66,7 @@ class MainActivity : AppCompatActivity() {
         contenedorOfertas = findViewById(R.id.contenedorOfertas)
         barraBarcelona = findViewById(R.id.barraBarcelona)
         textoCantidadBarcelona = findViewById(R.id.textoCantidadBarcelona)
+        textoSalarioMinimo = findViewById(R.id.textoSalarioMinimo)
 
         configurarSpinner()
 
@@ -114,12 +117,14 @@ class MainActivity : AppCompatActivity() {
         val salarioTotal = ofertasFiltradas.sumOf { it.salario }
         val salarioMedio = if (ofertasFiltradas.isNotEmpty()) ofertasFiltradas.map { it.salario }.average() else 0.0
         val salarioMaximo = ofertasFiltradas.maxOfOrNull { it.salario } ?: 0
+        val salarioMinimo = ofertasFiltradas.minOfOrNull { it.salario } ?: 0
 
         textoCiudadSeleccionada.text = "Ciudad seleccionada: $ciudad"
         textoNumeroOfertas.text = "Numero de ofertas: $numeroOfertas"
         textoSalarioTotal.text = "Salario total: ${formatearSalario(salarioTotal)}"
         textoSalarioMedio.text = "Salario medio: ${formatearSalario(salarioMedio.toInt())}"
         textoSalarioMaximo.text = "Salario maximo: ${formatearSalario(salarioMaximo)}"
+        textoSalarioMinimo.text = "Salario minimo: ${formatearSalario(salarioMinimo)}"
 
         mostrarGrafico(ofertasFiltradas)
 

@@ -2,4 +2,5 @@
 <resources>
     <string name="barcelona">Barcelona</string>
     <string name="_0">0</string>
+    <string name="salario_minimo">Salario minimo: -</string>
 </resources>
