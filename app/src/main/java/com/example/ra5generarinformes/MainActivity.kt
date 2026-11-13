@@ -34,6 +34,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var textoCantidadValencia: TextView
     private lateinit var textoCantidadMadrid: TextView
     private lateinit var textoCantidadAlicante: TextView
+
+    private lateinit var barraBarcelona: ProgressBar
+    private lateinit var textoCantidadBarcelona: TextView
     private lateinit var contenedorOfertas: LinearLayout
 
     private val ofertas = ArrayList<Oferta>()
@@ -58,6 +61,8 @@ class MainActivity : AppCompatActivity() {
         textoCantidadMadrid = findViewById(R.id.textoCantidadMadrid)
         textoCantidadAlicante = findViewById(R.id.textoCantidadAlicante)
         contenedorOfertas = findViewById(R.id.contenedorOfertas)
+        barraBarcelona = findViewById(R.id.barraBarcelona)
+        textoCantidadBarcelona = findViewById(R.id.textoCantidadBarcelona)
 
         configurarSpinner()
 
@@ -73,7 +78,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun configurarSpinner() {
-        val ciudades = arrayOf("Todas", "Valencia", "Madrid", "Alicante")
+        val ciudades = arrayOf("Todas", "Valencia", "Madrid", "Alicante, Barcelona")
         val adaptador = ArrayAdapter(this, android.R.layout.simple_spinner_item, ciudades)
         adaptador.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerCiudad.adapter = adaptador
@@ -133,14 +138,24 @@ class MainActivity : AppCompatActivity() {
         val ofertasValencia = ofertasFiltradas.count { it.ciudad == "Valencia" }
         val ofertasMadrid = ofertasFiltradas.count { it.ciudad == "Madrid" }
         val ofertasAlicante = ofertasFiltradas.count { it.ciudad == "Alicante" }
-        val valorMaximo = maxOf(ofertasValencia, ofertasMadrid, ofertasAlicante, 1)
+        val ofertasBarcelona = ofertasFiltradas.count { it.ciudad == "Barcelona" }
 
-        barraValencia.max = valorMaximo; barraMadrid.max = valorMaximo; barraAlicante.max = valorMaximo
-        barraValencia.progress = ofertasValencia; barraMadrid.progress = ofertasMadrid; barraAlicante.progress = ofertasAlicante
+        val valorMaximo = maxOf(ofertasValencia, ofertasMadrid, ofertasAlicante, ofertasBarcelona, 1)
+
+        barraValencia.max = valorMaximo
+        barraMadrid.max = valorMaximo
+        barraAlicante.max = valorMaximo
+        barraBarcelona.max = valorMaximo
+
+        barraValencia.progress = ofertasValencia
+        barraMadrid.progress = ofertasMadrid
+        barraAlicante.progress = ofertasAlicante
+        barraBarcelona.progress = ofertasBarcelona
 
         textoCantidadValencia.text = ofertasValencia.toString()
         textoCantidadMadrid.text = ofertasMadrid.toString()
         textoCantidadAlicante.text = ofertasAlicante.toString()
+        textoCantidadBarcelona.text = ofertasBarcelona.toString()
     }
     private fun generarPdf() {
         try {

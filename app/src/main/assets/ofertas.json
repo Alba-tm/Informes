@@ -103,5 +103,13 @@
     "empresa": "TechSupport",
     "ciudad": "Alicante",
     "salario": 19000
+  },
+  {
+  "id": 16,
+  "puesto": "Desarrollador iOS Senior",
+  "empresa": "TechBarna",
+  "ciudad": "Barcelona",
+  "salario": 35000
   }
 ]
+
