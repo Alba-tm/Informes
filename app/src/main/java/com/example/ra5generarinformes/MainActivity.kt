@@ -1,5 +1,6 @@
 package com.example.ra5generarinformes
 
+import android.annotation.SuppressLint
 import android.graphics.Paint
 import android.graphics.Typeface
 import android.graphics.pdf.PdfDocument
@@ -97,7 +98,8 @@ class MainActivity : AppCompatActivity() {
                 objetoJson.getString("puesto"),
                 objetoJson.getString("empresa"),
                 objetoJson.getString("ciudad"),
-                objetoJson.getInt("salario")
+                objetoJson.getInt("salario"),
+                objetoJson.getString("modalidad")
             ))
         }
         return listaOfertas
@@ -106,6 +108,7 @@ class MainActivity : AppCompatActivity() {
     private fun filtrarOfertasPorCiudad(ciudad: String): List<Oferta> {
         return if (ciudad == "Todas") ofertas else ofertas.filter { it.ciudad == ciudad }
     }
+    @SuppressLint("SetTextI18n")
     private fun mostrarResultado(ciudad: String, ofertasFiltradas: List<Oferta>) {
         val numeroOfertas = ofertasFiltradas.size
         val salarioTotal = ofertasFiltradas.sumOf { it.salario }
@@ -123,7 +126,8 @@ class MainActivity : AppCompatActivity() {
         contenedorOfertas.removeAllViews()
         ofertasFiltradas.forEachIndexed { indice, oferta ->
             val textoOferta = TextView(this)
-            textoOferta.text = "${indice + 1}. ${oferta.puesto}\n${oferta.empresa} - ${oferta.ciudad} - ${formatearSalario(oferta.salario)}"
+            textoOferta.text = "${indice + 1}. ${oferta.puesto} (${oferta.modalidad})\n" +
+                    "${oferta.empresa} - ${oferta.ciudad} - ${formatearSalario(oferta.salario)}"
             textoOferta.textSize = 16f
             textoOferta.setPadding(0, 0, 0, 24)
             contenedorOfertas.addView(textoOferta)
@@ -165,13 +169,13 @@ class MainActivity : AppCompatActivity() {
             val canvas = pagina.canvas
             val paint = Paint()
 
-            // Fase 12
+
             paint.typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
             paint.textSize = 20f
             val ciudadSeleccionada = spinnerCiudad.selectedItem.toString()
             canvas.drawText("Informe de Ofertas: $ciudadSeleccionada", 50f, 50f, paint)
 
-            // Fase 13
+
             paint.typeface = Typeface.create(Typeface.DEFAULT, Typeface.NORMAL)
             paint.textSize = 14f
             var posicionY = 100f
@@ -183,7 +187,7 @@ class MainActivity : AppCompatActivity() {
             }
             documentoPdf.finishPage(pagina)
 
-            // Fase 14
+
             val carpetaDescargas = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
             val archivoPdf = File(carpetaDescargas, "Informe_Ofertas_$ciudadSeleccionada.pdf")
             val salida = FileOutputStream(archivoPdf)

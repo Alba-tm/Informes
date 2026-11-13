@@ -4,112 +4,127 @@
     "puesto": "Desarrollador Android Junior",
     "empresa": "TecnoLevante",
     "ciudad": "Valencia",
-    "salario": 21000
+    "salario": 21000,
+    "modalidad": "Híbrido"
   },
   {
     "id": 2,
     "puesto": "Programador Kotlin Junior",
     "empresa": "AppSoluciones",
     "ciudad": "Valencia",
-    "salario": 22000
+    "salario": 22000,
+    "modalidad": "Presencial"
   },
   {
     "id": 3,
     "puesto": "Analista de Datos",
     "empresa": "DataVLC",
     "ciudad": "Valencia",
-    "salario": 28000
+    "salario": 28000,
+    "modalidad": "Remoto"
   },
   {
     "id": 4,
     "puesto": "Desarrollador Backend",
     "empresa": "WebCorp",
     "ciudad": "Valencia",
-    "salario": 32000
+    "salario": 32000,
+    "modalidad": "Remoto"
   },
   {
     "id": 5,
     "puesto": "Diseñador UX/UI",
     "empresa": "DesignStudio",
     "ciudad": "Valencia",
-    "salario": 25000
+    "salario": 25000,
+    "modalidad": "Híbrido"
   },
   {
     "id": 6,
     "puesto": "Desarrollador Android Senior",
     "empresa": "MadTech",
     "ciudad": "Madrid",
-    "salario": 45000
+    "salario": 45000,
+    "modalidad": "Remoto"
   },
   {
     "id": 7,
     "puesto": "Ingeniero de Software",
     "empresa": "GlobalSys",
     "ciudad": "Madrid",
-    "salario": 40000
+    "salario": 40000,
+    "modalidad": "Híbrido"
   },
   {
     "id": 8,
     "puesto": "Arquitecto Cloud",
     "empresa": "CloudNet",
     "ciudad": "Madrid",
-    "salario": 55000
+    "salario": 55000,
+    "modalidad": "Remoto"
   },
   {
     "id": 9,
     "puesto": "Desarrollador Frontend",
     "empresa": "FrontMad",
     "ciudad": "Madrid",
-    "salario": 30000
+    "salario": 30000,
+    "modalidad": "Presencial"
   },
   {
     "id": 10,
     "puesto": "Scrum Master",
     "empresa": "AgileCorp",
     "ciudad": "Madrid",
-    "salario": 38000
+    "salario": 38000,
+    "modalidad": "Híbrido"
   },
   {
     "id": 11,
     "puesto": "Desarrollador iOS",
     "empresa": "AppleSolutions",
     "ciudad": "Alicante",
-    "salario": 28000
+    "salario": 28000,
+    "modalidad": "Remoto"
   },
   {
     "id": 12,
     "puesto": "Administrador de Sistemas",
     "empresa": "SysAli",
     "ciudad": "Alicante",
-    "salario": 26000
+    "salario": 26000,
+    "modalidad": "Presencial"
   },
   {
     "id": 13,
     "puesto": "Consultor SAP",
     "empresa": "ConsultingAli",
     "ciudad": "Alicante",
-    "salario": 35000
+    "salario": 35000,
+    "modalidad": "Híbrido"
   },
   {
     "id": 14,
     "puesto": "Especialista en Ciberseguridad",
     "empresa": "SecureNet",
     "ciudad": "Alicante",
-    "salario": 42000
+    "salario": 42000,
+    "modalidad": "Remoto"
   },
   {
     "id": 15,
     "puesto": "Soporte Técnico IT",
     "empresa": "TechSupport",
     "ciudad": "Alicante",
-    "salario": 19000
+    "salario": 19000,
+    "modalidad": "Presencial"
   },
   {
-  "id": 16,
-  "puesto": "Desarrollador iOS Senior",
-  "empresa": "TechBarna",
-  "ciudad": "Barcelona",
-  "salario": 35000
+    "id": 16,
+    "puesto": "Desarrollador iOS Senior",
+    "empresa": "TechBarna",
+    "ciudad": "Barcelona",
+    "salario": 35000,
+    "modalidad": "Híbrido"
   }
 ]
-
